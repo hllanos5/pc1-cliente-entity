@@ -1,0 +1,146 @@
+openapi: 3.0.0
+info:
+  title: Client Microservice
+  description: Client Microservice
+  version: 1.0.0
+servers:
+  - url: http://localhost:8585
+paths:
+  /client:
+    post:
+      tags:
+        - client
+      summary: Add a new client to the database
+      description: Add a new client to the database
+      operationId: addClient
+      requestBody:
+        description: Create a new client in the database
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/ClientRequest'
+        required: true
+      responses:
+        "200":
+          description: Successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientResponse'
+        "405":
+          description: Invalid input
+    get:
+      tags:
+        - client
+      summary: Find client by ID
+      description: Returns a single client
+      operationId: getClientById
+      parameters:
+        - name: id
+          in: path
+          description: ID of client to return
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientResponse'
+        "400":
+          description: Invalid ID supplied
+        "404":
+          description: Client not found
+  /client/dni/{dni}:
+    get:
+      tags:
+        - client
+      summary: Find client by DNI
+      description: Returns a single client
+      operationId: getClientByDNI
+      parameters:
+        - name: dni
+          in: path
+          description: DNI of client to return
+          required: true
+          style: simple
+          explode: false
+          schema:
+            type: string
+      responses:
+        "200":
+          description: successful operation
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/ClientResponse'
+        "400":
+          description: Invalid DNI supplied
+        "404":
+          description: Client not found
+components:
+  schemas:
+    ClientResponse:
+      type: object
+      additionalProperties:
+        type: object
+    ClientRequest:
+      required:
+        - dni
+        - names
+        - surnames
+        - email
+        - phone
+      type: object
+      properties:
+        id:
+          type: string
+          readOnly: true
+        dni:
+          type: string
+          description: DNI
+          minimum: 8
+          maximum: 8
+          pattern: '[0-9]{8}'
+          example: "70000000"
+        names:
+          type: string
+          description: Names
+          pattern: '^(?=.{3,15}$)[A-ZÁÉÍÓÚ][a-zñáéíóú]+(?: [A-ZÁÉÍÓÚ][a-zñáéíóú]+)?$'
+          example: Hans Jonathan
+        surnames:
+          type: string
+          description: Surnames
+          pattern: '^(?=.{3,15}$)[A-ZÁÉÍÓÚ][a-zñáéíóú]+(?: [A-ZÁÉÍÓÚ][a-zñáéíóú]+)?$'
+          example: Llanos Chavez
+        email:
+          type: string
+          description: email
+          pattern: '[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,4}$'
+          example: hans.llanos@gmail.com
+        phone:
+          type: string
+          description: phone
+          pattern: '(\+51|51|)[0-9]+'
+          example: "+51940000000"
+        employer:
+          type: string
+          description: employer
+          example: NTTDATA
+        createdAt:
+          type: string
+          format: date-time
+          description: Creation date
+          example: "2022-10-27T20:30:00Z"
+          readOnly: true
+  requestBodies:
+    client:
+      description: client object that needs to be added to the database
+      content:
+        application/json:
+          schema:
+            $ref: '#/components/schemas/ClientRequest'
