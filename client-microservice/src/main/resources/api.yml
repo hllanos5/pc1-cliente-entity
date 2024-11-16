@@ -18,7 +18,7 @@ paths:
         content:
           application/json:
             schema:
-              $ref: '#/components/schemas/ClientRequest'
+              $ref: '#/components/schemas/Client'
         required: true
       responses:
         "200":
@@ -26,7 +26,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ClientResponse'
+                $ref: '#/components/schemas/Response'
         "405":
           description: Invalid input
     get:
@@ -50,7 +50,7 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ClientResponse'
+                $ref: '#/components/schemas/Client'
         "400":
           description: Invalid ID supplied
         "404":
@@ -77,18 +77,18 @@ paths:
           content:
             application/json:
               schema:
-                $ref: '#/components/schemas/ClientResponse'
+                $ref: '#/components/schemas/Client'
         "400":
           description: Invalid DNI supplied
         "404":
           description: Client not found
 components:
   schemas:
-    ClientResponse:
+    Response:
       type: object
       additionalProperties:
         type: object
-    ClientRequest:
+    Client:
       required:
         - dni
         - names
@@ -143,4 +143,4 @@ components:
       content:
         application/json:
           schema:
-            $ref: '#/components/schemas/ClientRequest'
+            $ref: '#/components/schemas/Client'
