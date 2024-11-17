@@ -5,6 +5,7 @@ import com.nttdata.client.microservice.repository.ClientRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import reactor.core.publisher.Mono;
+import reactor.core.publisher.Flux;
 
 @Service
 public class ClientServiceImp  implements ClientService{
@@ -22,6 +23,11 @@ public class ClientServiceImp  implements ClientService{
     }
 
     @Override
+    public Flux<Client> findAll() {
+        return clientRepository.findAll();
+    }
+
+    @Override
     public Mono<Client> findByDni(String dni) {
         return clientRepository.findByDni(dni);
     }
@@ -31,8 +37,7 @@ public class ClientServiceImp  implements ClientService{
         return clientRepository.findById(id)
                 .flatMap(c -> client)
                 .doOnNext(e -> e.setId(id))
-                .flatMap(clientRepository::save)
-                .defaultIfEmpty(null);
+                .flatMap(clientRepository::save);
 
     }
 

@@ -8,7 +8,7 @@ import org.springframework.stereotype.Component;
 public class ClientMapper implements EntityMapper<Client, com.nttdata.client.microservice.domain.Client>{
 
     @Override
-    public com.nttdata.client.microservice.domain.Client ToDocument(Client model) {
+    public com.nttdata.client.microservice.domain.Client toDocument(Client model) {
         com.nttdata.client.microservice.domain.Client client= new com.nttdata.client.microservice.domain.Client();
         BeanUtils.copyProperties(model, client);
         return client;

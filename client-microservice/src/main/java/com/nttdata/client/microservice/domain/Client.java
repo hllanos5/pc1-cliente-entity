@@ -3,11 +3,10 @@ package com.nttdata.client.microservice.domain;
 import lombok.Data;
 import lombok.Getter;
 import lombok.Setter;
-import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.Id;
 import org.springframework.data.mongodb.core.index.Indexed;
 import org.springframework.data.mongodb.core.mapping.Document;
-import java.util.Date;
+
 
 @Data
 @Getter
@@ -23,7 +22,6 @@ public class Client {
     @Indexed(unique = true)
     private String email;
     private String phone;
-    @CreatedDate
-    private Date createdAt;
+    private String type;
 
 }
