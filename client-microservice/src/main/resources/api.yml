@@ -4,7 +4,7 @@ info:
   description: Client Microservice
   version: 1.0.0
 servers:
-  - url: http://localhost:8585
+  - url: http://localhost:8080
 paths:
   /client:
     post:
