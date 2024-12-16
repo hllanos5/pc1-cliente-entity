@@ -1,0 +1,19 @@
+version: '3.7'
+services:
+  client-microservice:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    ports:
+      - 8081:8081
+    networks:
+      - servicio_ntt
+  mongodb:
+    image: mongo
+    ports:
+      - '27017:27017'
+    networks:
+      - servicio_ntt
+networks:
+  servicio_ntt:
+    external: true
